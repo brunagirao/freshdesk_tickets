@@ -4,9 +4,54 @@
 * TestClass : FreshdeskTicketServiceTest
 * Author    : Bruna Girão
 * Date      : 11-07-2023
+--------------------------------------------------------------------------------------------------
+Date                Modified By             Description
+--------------------------------------------------------------------------------------------------
+11-07-2023         Bruna Girão             create class 
+11-07-2023         Bruna Girão             add createTicket() method
 ***************************************************************************************************/
 public with sharing class FreshdeskTicketService {
-    public FreshdeskTicketService() {
+    
+    //Freshdesk Custom Settings
+    public static FreshdeskSettings__c freshDeskSettings = FreshdeskSettings__c.getInstance('Default'); 
+    
+    //HTTP Request/Response Variables
+    public static Http http;
+    public static HttpRequest request;
+    public static HttpResponse response;
+
+
+    public static void createTicket(FreshdeskTicketWrapper.TicketWrapper ticketWrapper) {
+        System.debug('SETTINGS => ' + freshDeskSettings);
+        try {
+            if(ticketWrapper != null) {
+                System.debug('ticketWrapper => ' + ticketWrapper);
+            
+                http      = new Http();
+                request   = new HttpRequest();
+                response  = new HttpResponse();
+
+                request.setEndpoint('callout:FreshdeskCredential' + freshDeskSettings.TicketEndpoint__c);
+                request.setMethod('POST');
+                request.setHeader('Content-Type', 'application/json');
+                request.setHeader('Authorization', 'Basic ' + EncodingUtil.base64Encode(Blob.valueOf(freshDeskSettings.ApiKey__c)));
+                
+                request.setBody(FreshdeskTicketWrapper.generateJSONFormat(ticketWrapper));
+                System.debug('REQUEST ==> ' + request);
+                response = http.send(request);
+
+                if(response.getStatusCode() >= 200 && response.getStatusCode() < 300) {
+                    System.debug('Response Server Success => ' + response.getBody()); 
+                } else {
+                    System.debug('Response Server Error => ' + response.getBody()); 
+                }
+
+            }
+            
+        } catch (Exception e) {
+            System.debug('ERROR => ' + e.getMessage());
+        }
+
 
     }
 }
