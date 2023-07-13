@@ -9,6 +9,7 @@ Date                Modified By             Description
 --------------------------------------------------------------------------------------------------
 11-07-2023         Bruna Girão             create class 
 11-07-2023         Bruna Girão             add createTicket() method
+13-07-2023         Bruna Girão             deserialize response of the API
 ***************************************************************************************************/
 public with sharing class FreshdeskTicketService {
     
@@ -41,7 +42,8 @@ public with sharing class FreshdeskTicketService {
                 response = http.send(request);
 
                 if(response.getStatusCode() >= 200 && response.getStatusCode() < 300) {
-                    System.debug('Response Server Success => ' + response.getBody()); 
+                    FreshdeskTicketWrapper.TicketWrapper ticket = (FreshdeskTicketWrapper.TicketWrapper) JSON.deserialize(response.getBody(), FreshdeskTicketWrapper.TicketWrapper.class);
+                    System.debug('Response Server Success => ' + ticket); 
                 } else {
                     System.debug('Response Server Error => ' + response.getBody()); 
                 }
@@ -51,7 +53,6 @@ public with sharing class FreshdeskTicketService {
         } catch (Exception e) {
             System.debug('ERROR => ' + e.getMessage());
         }
-
 
     }
 }
