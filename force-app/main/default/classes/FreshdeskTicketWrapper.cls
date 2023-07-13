@@ -8,6 +8,7 @@
 Date                Modified By             Description
 --------------------------------------------------------------------------------------------------
 11-07-2023         Bruna Girão             create class 
+13-07-2023         Bruna Girão             fixed some field and the generateJSONFormat()
 ***************************************************************************************************/
 
 public class FreshdeskTicketWrapper {
@@ -21,8 +22,8 @@ public class FreshdeskTicketWrapper {
 
         public String subject;	
         public String type;	
-        public String textDescription;	
-        public String htmlDescription;
+        public String description;	
+        public String description_text;
         
         public Boolean urgent;
         public List<Blob> attachments;
@@ -51,18 +52,12 @@ public class FreshdeskTicketWrapper {
         JSONGenerator jsGen = JSON.createGenerator(true);
         jsGen.writeStartObject();   
 
-
-        //jsGen.writeNumberField('requester_id',      wrapper.requester.id);
-        //jsGen.writeStringField('name',              wrapper.requester.name);
         jsGen.writeStringField('email',             wrapper.requester.email);
-        // jsGen.writeStringField('phone',             wrapper.requester.phone);
         jsGen.writeNumberField('source',            wrapper.source);
         jsGen.writeNumberField('status',            wrapper.status);
-        jsGen.writeNumberField('priority',            wrapper.priority);
+        jsGen.writeNumberField('priority',          wrapper.priority);
         jsGen.writeStringField('subject',           wrapper.subject);
-        //jsGen.writeStringField('type',              wrapper.type);
-        jsGen.writeStringField('description',       wrapper.textDescription);
-        //jsGen.writeStringField('description_html',  wrapper.htmlDescription);
+        jsGen.writeStringField('description',       wrapper.description);
 
         jsGen.writeEndObject();
         String jsonData = jsGen.getAsString();
