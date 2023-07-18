@@ -9,13 +9,24 @@
             <lightning-layout-item size="2" padding='around-small'>
                 <lightning-input 
                     type="email"
-                    label="Email"
+                    label="Requester Email"
+                    value={emailValue}
+                    autocomplete="on"
+                    placeholder="Enter with your email..."
+                    required
                 ></lightning-input>
             </lightning-layout-item>
             <lightning-layout-item size="2" padding='around-small'>
                 <lightning-input 
                     type="text"
                     label="Subject"
+                    value={subjectValue}
+                    autocomplete="on"
+                    max-length ="20"
+                    placeholder="Enter with Subject..."
+                    message-when-too-long="A maximum of 20 characters are allowed in a ticket subject." 
+                    message-when-value-missing="An empty subject aren't allowed."
+                    required
                 ></lightning-input>
             </lightning-layout-item>
         </lightning-layout>
@@ -24,24 +35,26 @@
         <lightning-layout horizontal-align='center' vertical-align='start' multiple-rows>
             <lightning-layout-item size="2" padding='around-small'>
                 <template if:true={priorityPicklist.data}>
-                <lightning-combobox
-                label="Priority"
-                value={value}
+                    <lightning-combobox
+                    label="Priority"
+                    value={statusValue}
                     placeholder="-Select-"
                     options={priorityPicklist.data.values}
-                onchange={handleChange} 
-                ></lightning-combobox>
+                    onchange={handleChange}
+                    required 
+                    ></lightning-combobox>
                 </template>
             </lightning-layout-item>
             <lightning-layout-item size="2" padding='around-small'>
                 <template if:true={statusPicklist.data}>
-                <lightning-combobox
-                label="Status"
-                value={value}
+                    <lightning-combobox
+                    label="Status"
+                    value={priorityValue}
                     placeholder="-Select-"
                     options={statusPicklist.data.values}
-                onchange={handleChange} 
-                ></lightning-combobox>
+                    onchange={handleChange}
+                    disabled
+                    ></lightning-combobox>
                 </template>
             </lightning-layout-item>
         </lightning-layout>
@@ -52,9 +65,12 @@
                 <lightning-textarea 
                   max-length="1000"
                   label="Description" 
-                  placeholder="type here..."
-                  value={value}
+                  placeholder="Type here..."
+                  value={descriptionValue}
                   variant="standard"
+                  message-when-too-long="A maximum of 1000 characters are allowed in a ticket description." 
+                  message-when-value-missing="An empty description aren't allowed."
+                  required
                 ></lightning-textarea>
             </lightning-layout-item>
         </lightning-layout>
