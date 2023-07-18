@@ -23,22 +23,26 @@
         <!--2ND SECTION: PRIORITY & STATUS-->
         <lightning-layout horizontal-align='center' vertical-align='start' multiple-rows>
             <lightning-layout-item size="2" padding='around-small'>
+                <template if:true={priorityPicklist.data}>
                 <lightning-combobox
                 label="Priority"
                 value={value}
-                placeholder="Select Priority"
-                options={options}
+                    placeholder="-Select-"
+                    options={priorityPicklist.data.values}
                 onchange={handleChange} 
                 ></lightning-combobox>
+                </template>
             </lightning-layout-item>
             <lightning-layout-item size="2" padding='around-small'>
+                <template if:true={statusPicklist.data}>
                 <lightning-combobox
                 label="Status"
                 value={value}
-                placeholder="Select Status"
-                options={options}
+                    placeholder="-Select-"
+                    options={statusPicklist.data.values}
                 onchange={handleChange} 
                 ></lightning-combobox>
+                </template>
             </lightning-layout-item>
         </lightning-layout>
 
