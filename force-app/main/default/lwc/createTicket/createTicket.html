@@ -1,0 +1,79 @@
+<template>
+
+    <!--CARD HEADER-->
+    <lightning-card icon-name="standard:account" variant="base" style="width:50%">
+        <div slot="title">Create Ticket</div>
+      
+        <!--1ST SECTION: EMAIL & SUBJECT-->
+        <lightning-layout horizontal-align='center' vertical-align='start' multiple-rows>
+            <lightning-layout-item size="2" padding='around-small'>
+                <lightning-input 
+                    type="email"
+                    label="Email"
+                ></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="2" padding='around-small'>
+                <lightning-input 
+                    type="text"
+                    label="Subject"
+                ></lightning-input>
+            </lightning-layout-item>
+        </lightning-layout>
+
+        <!--2ND SECTION: PRIORITY & STATUS-->
+        <lightning-layout horizontal-align='center' vertical-align='start' multiple-rows>
+            <lightning-layout-item size="2" padding='around-small'>
+                <lightning-combobox
+                label="Priority"
+                value={value}
+                placeholder="Select Priority"
+                options={options}
+                onchange={handleChange} 
+                ></lightning-combobox>
+            </lightning-layout-item>
+            <lightning-layout-item size="2" padding='around-small'>
+                <lightning-combobox
+                label="Status"
+                value={value}
+                placeholder="Select Status"
+                options={options}
+                onchange={handleChange} 
+                ></lightning-combobox>
+            </lightning-layout-item>
+        </lightning-layout>
+
+        <!--3RD SECTION: OBSERVATION-->
+        <lightning-layout horizontal-align='center' vertical-align='start' multiple-rows>
+            <lightning-layout-item size="4" padding='around-small'>
+                <lightning-textarea 
+                  max-length="1000"
+                  label="Description" 
+                  placeholder="type here..."
+                  value={value}
+                  variant="standard"
+                ></lightning-textarea>
+            </lightning-layout-item>
+        </lightning-layout>
+
+        <!--4TH SECTION: CANCEL & SAVE BUTTONS -->
+        <lightning-layout horizontal-align='center' vertical-align='start' multiple-rows>
+            <lightning-layout-item size="4" padding='around-small'>
+                <lightning-modal-footer>
+                    <lightning-button
+                        class="slds-button"
+                        variant="neutral"
+                        label="Cancel"
+                        onclick={handleDismiss}
+                    ></lightning-button>
+                    <lightning-button
+                        class="slds-button slds-m-left_x-small"
+                        variant="brand"
+                        label="Save"
+                    ></lightning-button>
+                </lightning-modal-footer>
+            </lightning-layout-item>
+        </lightning-layout>
+
+    </lightning-card>
+
+</template>
